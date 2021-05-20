@@ -17,10 +17,98 @@ public class HuffmanCode {
 		byte[] compressed = huffmanZip(contentBytes);
 		System.out.println(Arrays.toString(compressed) + "size: " + compressed.length);
 		
+		byte[] original =  decode(huffmanCodes, compressed);
+		System.out.println(new String(original));
+	}
+	
+	/*
+	 * 
+	 * 
+	 * <Decode> 
+	 * 
+	 * 1. huffmancodeByte ---------> huffmancode
+	 * 2. huffmancode ----------> ascii code for string
+	 * 
+	 */
+	
+	/**
+	 * 
+	 * @param huffmancodes
+	 * @param huffmanbytes
+	 * @return
+	 */
+	private static byte[] decode (Map<Byte, String> huffmancodes, byte[] huffmanbytes) {
 		
+		//1. huffmancodeByte ---------> huffmancode 
+		StringBuilder stringBuilder = new StringBuilder();
+		for(int i = 0; i<huffmanbytes.length;i++) {
+			//last index, doesn't need to fill in 1s for binary  
+			boolean flag = (i==huffmanbytes.length-1);
+			//append each return string
+			stringBuilder.append(byteToBitString(!flag, huffmanbytes[i]));
+		}
+		System.out.println("sdsadas" + stringBuilder.toString());
+		
+		
+		//2. huffmancode ------> asciii code 
+		Map<String, Byte> map = new HashMap<>();
+		for(Map.Entry<Byte, String> entry: huffmancodes.entrySet()) {
+			map.put(entry.getValue(), entry.getKey());
+		}
+		//NOW map<huffmancode, ascii>
+		
+		
+		List<Byte> list = new ArrayList<>();
+		
+		//now matching the huffmancode in string builder to the hashMap key, if match add the 
+		//ascii to the list.
+		for(int i = 0; i<stringBuilder.length();) {
+			int count = 1;
+			boolean flag = true;
+			Byte b = null;
+			while(flag) {
+				String key = stringBuilder.substring(i,i+count);
+				b = map.get(key);
+				if(b==null) {
+					count++;
+				}else {
+					flag= false;
+				}
+			}
+			list.add(b);
+			i+=count;
+		}
+		//transfer to the byte[]
+		byte [] b = new byte[list.size()];
+		for(int i = 0; i<b.length;i++) {
+			b[i] = list.get(i);
+		}
+		return b ;
 		 
+	}
+	
+	/**
+	 * 
+	 * @param flag (determine if fill-in needed or not)
+	 * @param b
+	 * @return each byte's string 
+	 */
+	private static String byteToBitString(boolean flag, byte b) {
+		int temp = b; 
 		
+		if(flag) {
+			temp |= 256; //Bits OR --- Fill in 1s as needed (256: 1 0000 0000)
+		}
+
+		String str = Integer.toBinaryString(temp);
 		
+		if(flag) {
+			//as default is 32 bits, we should pick last eight digits.
+			return str.substring(str.length()-8);
+		}else {
+			return str;
+		}
+		 
 	}
 	
 	/**

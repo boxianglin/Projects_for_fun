@@ -1,5 +1,10 @@
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -8,18 +13,94 @@ import java.util.Map;
 public class HuffmanCode {
 
 	public static void main(String[] args) {
-		String content = "i like like like java do you like a java";
-		byte [] contentBytes = content.getBytes();
-		System.out.println(contentBytes.length);
+//		String srcFile = "C://Users//boxiang//Desktop//tup//touxiang.jpg";
+//		String dstFile = "C://Users//boxiang//Desktop//tup//touxiang.zip";
+//		
+//		zipFile(srcFile, dstFile);
 		
- 
-		
-		byte[] compressed = huffmanZip(contentBytes);
-		System.out.println(Arrays.toString(compressed) + "size: " + compressed.length);
-		
-		byte[] original =  decode(huffmanCodes, compressed);
-		System.out.println(new String(original));
+		String srcFile = "C://Users//boxiang//Desktop//tup//touxiang.zip";
+		String dstFile = "C://Users//boxiang//Desktop//tup//touxiang2.jpg";
+		unZipFile(srcFile, dstFile);
 	}
+	
+	
+	/**
+	 * 
+	 * @param srcFile, input address
+	 * @param dstFile, output address
+	 */
+	public static void zipFile(String srcFile, String dstFile) {
+		
+		
+		FileInputStream is = null;
+		OutputStream os = null;
+		ObjectOutputStream oos = null;
+		 
+		try {
+			////////////////INPUT////////////////////////////////
+			is = new FileInputStream(srcFile);
+			//a byte[] with the same size as the souce file
+			byte [] b = new byte[is.available()];
+			is.read(b);
+			
+			//compressed by huffmancodes
+			byte[] huffmanBytes = huffmanZip(b); 
+			
+			///////////////OUTPUT////////////////////////////////
+			os = new FileOutputStream(dstFile);
+			oos = new ObjectOutputStream(os);
+			
+			oos.writeObject(huffmanBytes);
+			oos.writeObject(huffmanCodes);
+		
+			
+		}catch(Exception e){
+			System.out.println(e.getMessage());
+		}finally {
+			try {
+				is.close();
+				oos.close();
+				os.close();		 
+			}catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			 
+		}
+		 
+	}
+	
+	/**
+	 * 
+	 * @param zipFile
+	 * @param dstFile
+	 */
+	public static void unZipFile(String zipFile, String dstFile) {
+		InputStream is = null;
+		ObjectInputStream ois = null;
+		OutputStream os = null;
+		try {
+			is = new FileInputStream(zipFile);
+			ois = new ObjectInputStream(is);
+			byte[] huffmanbytes =(byte[])ois.readObject();
+			Map<Byte, String> huffmancodes =(Map<Byte, String>)ois.readObject();
+			
+			byte[] bytes = decode(huffmancodes, huffmanbytes);
+			
+			os = new FileOutputStream(dstFile);
+			os.write(bytes);
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+		}finally {
+			try {
+				os.close();
+				ois.close();
+				is.close();
+			}catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+	}
+	
 	
 	/*
 	 * 
@@ -124,12 +205,9 @@ public class HuffmanCode {
 		
 		//using list of nodes to generate the huffmanTree structure
 		Node huffmanTreeRoot = createHumanTree(nodes);
-		huffmanTreeRoot.preOrder();
-	 
 		
 		//using huffmanTree to generate the huffmanCode (stored in a map)
 		Map<Byte, String> huffmanCodes = getCodes(huffmanTreeRoot);
-		System.out.println(huffmanCodes);
 		
 		//store the huffmancode to the new byte array
 		byte[] huffmanCodeBytes = zip(bytes, huffmanCodes);

@@ -2,7 +2,6 @@
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -18,6 +17,7 @@ import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class HuffmanCode implements ActionListener{
@@ -66,30 +66,45 @@ public class HuffmanCode implements ActionListener{
 		zipFile.setActionCommand("unzip");
 		zipFile.addActionListener(this);
 	}
- 
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println(e.getActionCommand());
+
 		JFileChooser chooser = new JFileChooser(".");
 		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 	 
+		String address, dstAddress;
+		
+		
 		if(e.getActionCommand().equals("zip")) {
 			
 			int status = chooser.showOpenDialog(null);
 			if(status == JFileChooser.APPROVE_OPTION) {
-				String address = chooser.getSelectedFile().getAbsolutePath();	
-				String dstAddress = chooser.getCurrentDirectory().getAbsolutePath()+"\\abc.zip";
-//				String name = chooser.getSelectedFile().getName();
-//				System.out.println(address + "  " + dstAddress + " " +name);
-			 
+				address = chooser.getSelectedFile().getAbsolutePath();
+				String name = chooser.getSelectedFile().getName();
+				name = name.substring(0,name.lastIndexOf("."));
+				dstAddress = chooser.getCurrentDirectory().getAbsolutePath()+"\\"+name+".zip";
 				zipFile(address, dstAddress);
-		 
-				//C:\Users\boxiang\Desktop\tup\snake.png  C:\Users\boxiang\Desktop\tup
+				JOptionPane.showMessageDialog(null, "File has been compressed/encode to "+name+".zip");   
 			}
 			
 		}else if(e.getActionCommand().equals("unzip")) {
-			
+			 
+			int status = chooser.showOpenDialog(null);
+			if(status == JFileChooser.APPROVE_OPTION) {
+				address = chooser.getSelectedFile().getAbsolutePath();
+				String fileName = JOptionPane.showInputDialog(null,"Please Enter the fileName.fileType: \n","FileName(default:null)",JOptionPane.PLAIN_MESSAGE); 
+				dstAddress = chooser.getCurrentDirectory().getAbsolutePath()+"\\"+fileName;
+				System.out.println(dstAddress);
+				unZipFile(address, dstAddress);
+				if(!fileName.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "File has been restored/decoded to " + fileName);  
+				}else {
+					JOptionPane.showMessageDialog(null, "File has been restored/decoded to null");  
+				}
+				 
+			}
 		}
 		
 	}
@@ -441,14 +456,14 @@ public class HuffmanCode implements ActionListener{
 	 * Print the Huffman Tree in preorder
 	 * 
 	 */
-	private static void preOrder(Node root) {
-		if(root != null) {
-			root.preOrder();
-		}else {
-			System.out.println("Huffman Tree is Empty");
-		}
-		
-	}
+//	private static void preOrder(Node root) {
+//		if(root != null) {
+//			root.preOrder();
+//		}else {
+//			System.out.println("Huffman Tree is Empty");
+//		}
+//		
+//	}
 	 
 
 }

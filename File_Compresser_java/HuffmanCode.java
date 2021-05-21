@@ -1,3 +1,8 @@
+ 
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -10,17 +15,83 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HuffmanCode {
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class HuffmanCode implements ActionListener{
 
 	public static void main(String[] args) {
-//		String srcFile = "C://Users//boxiang//Desktop//tup//touxiang.jpg";
-//		String dstFile = "C://Users//boxiang//Desktop//tup//touxiang.zip";
+//		String srcFile = "C:\\Users\\boxiang\\Desktop\\tup\\snake.png";
+//		String dstFile = "C:\\Users\\boxiang\\Desktop\\tup\\compress.zip";
 //		
 //		zipFile(srcFile, dstFile);
+//		
+//		String srcFile = "C://Users//boxiang//Desktop//tup//touxiang.zip";
+//		String dstFile = "C://Users//boxiang//Desktop//tup//touxiang2.jpg";
+//		unZipFile(srcFile, dstFile);
 		
-		String srcFile = "C://Users//boxiang//Desktop//tup//touxiang.zip";
-		String dstFile = "C://Users//boxiang//Desktop//tup//touxiang2.jpg";
-		unZipFile(srcFile, dstFile);
+		
+		new HuffmanCode();
+
+		
+	}
+	public HuffmanCode() {
+		JFrame frame = new JFrame("File Compressor");
+		frame.setLayout(null);
+		frame.setVisible(true);
+		frame.setSize(350,250);
+		frame.setLocation(500,250);
+		frame.setResizable(false);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JPanel encode =  new JPanel();
+		frame.add(encode);
+		JButton srcFile = new JButton("Load (Compress/Encode)");
+		encode.add(srcFile);
+		encode.setBounds(0, 0, 350, 105);
+		encode.setBackground(new Color(128,128,128));
+		srcFile.setActionCommand("zip");
+		srcFile.addActionListener(this);
+ 
+		 
+		
+		JPanel decode = new JPanel();
+		frame.add(decode);
+		JButton zipFile = new JButton("Load (Restore/Decode");
+		decode.add(zipFile);
+		decode.setBounds(0, 105, 350, 125);
+		decode.setBackground(new Color(64,203,255));
+		zipFile.setActionCommand("unzip");
+		zipFile.addActionListener(this);
+	}
+ 
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		System.out.println(e.getActionCommand());
+		JFileChooser chooser = new JFileChooser(".");
+		chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+	 
+		if(e.getActionCommand().equals("zip")) {
+			
+			int status = chooser.showOpenDialog(null);
+			if(status == JFileChooser.APPROVE_OPTION) {
+				String address = chooser.getSelectedFile().getAbsolutePath();	
+				String dstAddress = chooser.getCurrentDirectory().getAbsolutePath()+"\\abc.zip";
+//				String name = chooser.getSelectedFile().getName();
+//				System.out.println(address + "  " + dstAddress + " " +name);
+			 
+				zipFile(address, dstAddress);
+		 
+				//C:\Users\boxiang\Desktop\tup\snake.png  C:\Users\boxiang\Desktop\tup
+			}
+			
+		}else if(e.getActionCommand().equals("unzip")) {
+			
+		}
+		
 	}
 	
 	
@@ -378,6 +449,7 @@ public class HuffmanCode {
 		}
 		
 	}
+	 
 
 }
 

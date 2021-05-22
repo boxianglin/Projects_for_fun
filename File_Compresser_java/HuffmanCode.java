@@ -96,13 +96,11 @@ public class HuffmanCode implements ActionListener{
 				address = chooser.getSelectedFile().getAbsolutePath();
 				String fileName = JOptionPane.showInputDialog(null,"Please Enter the fileName.fileType: \n","FileName(default:null)",JOptionPane.PLAIN_MESSAGE); 
 				dstAddress = chooser.getCurrentDirectory().getAbsolutePath()+"\\"+fileName;
-				System.out.println(dstAddress);
-				unZipFile(address, dstAddress);
-				if(!fileName.isEmpty()) {
+				
+				if(fileName != null) {
+					unZipFile(address, dstAddress);
 					JOptionPane.showMessageDialog(null, "File has been restored/decoded to " + fileName);  
-				}else {
-					JOptionPane.showMessageDialog(null, "File has been restored/decoded to null");  
-				}
+				} 
 				 
 			}
 		}

@@ -1,4 +1,4 @@
-Files that loaded will be decoded to .zip file,  the .zip file can only be unzip by the decode button.
+Files that loaded will be encode to .zip file,  the .zip file can only be unzip by the decode button.
 
 **run:**
 

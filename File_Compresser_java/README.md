@@ -4,9 +4,11 @@ Files that loaded will be encode to .zip file,  the .zip file can only be unzip 
 
 click the jar file OR,
 
-​		_cd (to the directory where jar file located)_
+```
+		cd (to the directory where jar file located)
 
-​		_java -jar FileCompressor.jar_
+		java -jar FileCompressor.jar
+```
 
 
 

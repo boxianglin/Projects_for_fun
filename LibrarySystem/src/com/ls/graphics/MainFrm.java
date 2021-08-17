@@ -49,7 +49,7 @@ public class MainFrm extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		JMenu mnNewMenu = new JMenu("Setting");
+		JMenu mnNewMenu = new JMenu("Menu");
 		mnNewMenu.setIcon(new ImageIcon(MainFrm.class.getResource("/images/settings.png")));
 		menuBar.add(mnNewMenu);
 		
@@ -58,10 +58,25 @@ public class MainFrm extends JFrame {
 		mnNewMenu.add(mnNewMenu_2);
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Add Category");
+		mntmNewMenuItem_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BookTypeAddInter bookTypeAdd = new BookTypeAddInter(); //inter add frame
+				bookTypeAdd.setVisible(true);
+				desktopPane.add(bookTypeAdd);
+			}
+		});
 		mntmNewMenuItem_2.setIcon(new ImageIcon(MainFrm.class.getResource("/images/add.png")));
 		mnNewMenu_2.add(mntmNewMenuItem_2);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Edit Category");
+		mntmNewMenuItem_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BookTypeManageInter bookTypeManage = new BookTypeManageInter(); //inter add frame
+				bookTypeManage.setVisible(true);
+				desktopPane.add(bookTypeManage);
+				
+			}
+		});
 		mntmNewMenuItem_3.setIcon(new ImageIcon(MainFrm.class.getResource("/images/edit.png")));
 		mnNewMenu_2.add(mntmNewMenuItem_3);
 		
@@ -70,10 +85,25 @@ public class MainFrm extends JFrame {
 		mnNewMenu.add(mnNewMenu_3);
 		
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Add Book");
+		mntmNewMenuItem_4.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				BookAddInterFrm bookAddInter = new BookAddInterFrm(); //inter add frame
+				bookAddInter.setVisible(true);
+				desktopPane.add(bookAddInter);
+			}
+		});
 		mntmNewMenuItem_4.setIcon(new ImageIcon(MainFrm.class.getResource("/images/add.png")));
 		mnNewMenu_3.add(mntmNewMenuItem_4);
 		
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Edit Book");
+		mntmNewMenuItem_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BookManagerInter bookManage = new BookManagerInter(); //inter add frame
+				bookManage.setVisible(true);
+				desktopPane.add(bookManage);
+			}
+		});
 		mntmNewMenuItem_5.setIcon(new ImageIcon(MainFrm.class.getResource("/images/edit.png")));
 		mnNewMenu_3.add(mntmNewMenuItem_5);
 		

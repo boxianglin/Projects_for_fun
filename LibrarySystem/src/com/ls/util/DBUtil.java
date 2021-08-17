@@ -35,6 +35,7 @@ public class DBUtil {
 		}
 	}
 	
+	//test connection
 	public static void main(String[] args) {
 		DBUtil db = new DBUtil();
 		try{

@@ -188,7 +188,7 @@ public class LogOnFrame extends JFrame {
 			con = dbUtil.getCon();
 			User currentUser = userDao.login(con, user);
 			if (currentUser != null) {
-				dispose();
+				dispose(); //this is to close the login frame the new mainfrm will be open
 				new MainFrm().setVisible(true);
 			}else {
 				JOptionPane.showMessageDialog(null, "Username or Password Incorrect!");
@@ -196,6 +196,12 @@ public class LogOnFrame extends JFrame {
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		}finally {
+			try {
+				dbUtil.closeCon(con);
+			}catch(Exception e2) {
+				e2.printStackTrace();
+			}
 		}
  
 		

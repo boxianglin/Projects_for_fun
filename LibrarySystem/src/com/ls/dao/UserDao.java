@@ -3,8 +3,8 @@ package com.ls.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-
 import com.ls.model.User;
+
 
 public class UserDao {
 	
@@ -31,4 +31,6 @@ public class UserDao {
 		}
 		return result;
 	}
+	
+
 }
